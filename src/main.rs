@@ -1,12 +1,19 @@
-use token::Tokens;
+use nfa::NFA;
+use token::{Token, Tokens};
 
-mod token;
 mod nfa;
+mod token;
 
 fn main() {
-    let file = std::fs::read_to_string("tokens.toml").unwrap();
-    let tokens: Tokens = toml::from_str(file.as_str()).unwrap();
-    println!("{:?}", tokens);
+    // let file = std::fs::read_to_string("tokens.toml").unwrap();
+    // let tokens: Tokens = toml::from_str(file.as_str()).unwrap();
+    // println!("{:?}", tokens);
+
+    let nfa = NFA::new_from_token(&Token {
+        value: "aaaa|bbbd|cc".to_string(),
+        kind: "char".to_string(),
+    });
+    print!("{}", nfa);
 }
 
 #[test]
@@ -21,9 +28,10 @@ fn test() {
             { kind = "EQ", value = "=" },
             { kind = "WS", value = "[ \t\n]+" },
         ]
-        "#
-    ).unwrap();
+        "#,
+    )
+    .unwrap();
     let tokens: Tokens = toml::from_str(file.as_str()).unwrap();
-    println!("{:?}",tokens);
+    println!("{:?}", tokens);
     assert_eq!(tokens.tokens.len(), 5);
 }

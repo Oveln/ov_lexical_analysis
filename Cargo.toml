@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 toml = "0.8.13"
 serde = {version = "*", features = ["derive"]}
+lazy_static = "*"
+log = "*"
